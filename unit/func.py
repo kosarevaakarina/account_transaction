@@ -1,5 +1,4 @@
 import json
-from datetime import date
 
 
 def open_file(file_json):
@@ -37,9 +36,7 @@ def formatted_date(transaction_data):
     """
     date_operation = transaction_data.get('date')
     index = date_operation.index('T')
-    date_operation = list(map(int, date_operation[0:index].split('-')))
-    the_date = date(date_operation[0], date_operation[1], date_operation[2])
-    return the_date.strftime("%d.%m.%Y")
+    return date_operation[:index]
 
 
 def get_description(transaction_data):
@@ -59,7 +56,7 @@ def get_sender(transaction_data):
     :return: название платежной системы и номер счета отправителя
     """
     sender = transaction_data.get('from')
-    if sender == None:
+    if sender is None:
         return f"Данные об отправителе отсутствуют"
     else:
         sender = sender.split()
@@ -94,7 +91,3 @@ def get_currency(transaction_data):
     """
     currency = transaction_data['operationAmount']['currency'].get('name')
     return currency
-
-
-
-
